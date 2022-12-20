@@ -9,11 +9,24 @@
     <title>{% block title %}{% endblock title %}</title>
 </head>
 <body>
-    
+
+    {% if user.is_authenticated %}
+    <ul>
+        {% if user.is_teacher %}
+        <li><a href="{% url 'teacher_dashboard' %}">teacher dashboard</a></li> 
+        {% elif user.is_student %}
+        <li><a href="{% url 'student_dashboard' %}">student dashboard</a></li> 
+        {% endif %}
+        <li><a href="{% url 'logout' %}">logout</a></li> 
+    </ul>
+    {% else %}
     <ul>
         <li><a href="{% url 'student_signup' %}">I'm a student</a></li>
         <li><a href="{% url 'teacher_signup' %}">I'm a teacher</a></li>
+        <li><a href="{% url 'student_login' %}">student login</a></li>
+        <li><a href="{% url 'teacher_login' %}">teacher login</a></li>
     </ul>
+    {% endif %}
 
     <div class="container">
         {% block body %}{% endblock body %}
