@@ -21,3 +21,20 @@ class StudentSignupForm(UserCreationForm):
         user.save()
         Student.objects.create(user=user)
         return user
+
+
+class TeacherSignupForm(UserCreationForm):
+    """Generate teacher user account signup form."""
+
+    class Meta(UserCreationForm.Meta):
+        """Signup form meta."""
+
+        model = User
+
+    def save(self, commit=True) -> User:
+        """Set user is teacher attribute to True then save."""
+        user: User = super().save(commit=False)
+        user.is_teacher = True
+        if commit:
+            user.save()
+        return user

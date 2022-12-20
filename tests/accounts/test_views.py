@@ -23,3 +23,23 @@ def test_student_signup_success(client: Client):
         }
     )
     assert response.status_code == 302
+
+
+def test_teacher_signup_view(client: Client):
+    """Test success GET response."""
+    response = client.get('/accounts/signup/teacher/')
+    assert response.status_code == 200
+
+
+def test_teacher_signup_success(client: Client):
+    """Test success POST request."""
+    response = client.post(
+        '/accounts/signup/teacher/',
+        data={
+            'username': 'janedoe',
+            'email': 'janedoe@example.com',
+            'password1': 'jane@123',
+            'password2': 'jane@123'
+        }
+    )
+    assert response.status_code == 302
