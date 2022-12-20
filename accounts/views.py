@@ -1,8 +1,11 @@
 """Account views."""
 from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
-from django.views.generic import CreateView
+from django.utils.decorators import method_decorator
+from django.views.generic import CreateView, TemplateView
 
+from .decorators import student_required
 from .forms import StudentSignupForm, TeacherSignupForm
 from .models import User
 
@@ -23,7 +26,14 @@ class StudentSignupView(CreateView):
         """Save, login user & redirect to home if form is valid."""
         user = form.save()
         login(self.request, user)
-        return redirect('home')
+        return redirect('student_dashboard')
+
+
+@method_decorator([login_required, student_required], name='dispatch')
+class StudentDashboardView(TemplateView):
+    """Student dashboard."""
+
+    template_name = 'student/dashboard.html'
 
 
 class TeacherSignupView(CreateView):
