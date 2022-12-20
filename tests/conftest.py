@@ -1,5 +1,6 @@
 """Pytest fixtures."""
 import pytest
+from django.test import Client
 
 from accounts.models import Student, User
 
@@ -19,3 +20,9 @@ def student(user: User) -> Student:
     """Student test fixture."""
     user.is_student = True
     return Student.objects.create(user=user)
+
+
+@pytest.fixture
+def client() -> Client:
+    """Django request client fixture."""
+    return Client()
