@@ -19,6 +19,7 @@ def user() -> User:
 def student(user: User) -> Student:
     """Student test fixture."""
     user.is_student = True
+    user.save()
     return Student.objects.create(user=user)
 
 
