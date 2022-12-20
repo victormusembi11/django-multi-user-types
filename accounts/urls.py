@@ -11,5 +11,6 @@ urlpatterns = [
         views.StudentDashboardView.as_view(),
         name="student_dashboard",
     ),
+    path("teacher/dashboard/", views.TeacherDashboardView.as_view(), name="teacher_dashboard"),
     path("signup/teacher/", views.TeacherSignupView.as_view(), name="teacher_signup"),
 ]

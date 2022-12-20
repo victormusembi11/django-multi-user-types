@@ -2,7 +2,7 @@
 import pytest
 from django.test import Client
 
-from accounts.models import Student
+from accounts.models import Student, User
 
 pytestmark = pytest.mark.django_db
 
@@ -52,3 +52,12 @@ def test_teacher_signup_success(client: Client):
         }
     )
     assert response.status_code == 302
+
+
+def test_teacher_dashboard(client: Client, user: User):
+    """Test success GET request."""
+    user.is_teacher = True
+    user.save()
+    client.login(username="johndoe", password="john@123")
+    response = client.get('/accounts/teacher/dashboard/')
+    assert response.status_code == 200

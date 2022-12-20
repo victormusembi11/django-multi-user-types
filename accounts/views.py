@@ -5,7 +5,7 @@ from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, TemplateView
 
-from .decorators import student_required
+from .decorators import student_required, teacher_required
 from .forms import StudentSignupForm, TeacherSignupForm
 from .models import User
 
@@ -53,3 +53,10 @@ class TeacherSignupView(CreateView):
         user = form.save()
         login(self.request, user)
         return redirect('home')
+
+
+@method_decorator([login_required, teacher_required], name='dispatch')
+class TeacherDashboardView(TemplateView):
+    """Teacher Dashboard."""
+
+    template_name = 'teacher/dashboard.html'
