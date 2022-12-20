@@ -1,7 +1,9 @@
 """Account views."""
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LoginView
 from django.shortcuts import redirect
+from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, TemplateView
 
@@ -60,3 +62,17 @@ class TeacherDashboardView(TemplateView):
     """Teacher Dashboard."""
 
     template_name = 'teacher/dashboard.html'
+
+
+class StudentLoginView(LoginView):
+    """Student login view."""
+
+    template_name = 'login/student.html'
+    success_url = reverse_lazy('home')
+
+
+class TeacherLoginView(LoginView):
+    """Teacher login view."""
+
+    template_name = 'login/teacher.html'
+    success_url = '/accounts/teacher/dashboard/'
